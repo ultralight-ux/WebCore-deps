@@ -53,7 +53,7 @@ set(LIBXSLT_SOURCES
   libxslt/xsltutils.c
 )
 
-find_package(LibXML2 2.9.7 REQUIRED)
+#find_package(LibXML2 2.9.7 REQUIRED)
 
 set(LIBXSLT_INCLUDE_DIRS
   ${CMAKE_SOURCE_DIR}

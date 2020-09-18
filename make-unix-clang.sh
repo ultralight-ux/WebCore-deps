@@ -7,13 +7,14 @@ mkdir -p $BUILD_DIR
 CMAKE_INSTALL_PREFIX=$(cd $BUILD_DIR; pwd)
 
 echo Copying ICU build files to out directory.
-mkdir -p "$BUILD_DIR/bin" && cp -r "src/icu-data/" "$BUILD_DIR/bin"
+mkdir -p $BUILD_DIR/bin
+cp -a src/icu-data/. $BUILD_DIR/bin
 
 export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 
 CMAKE_BUILD_TYPE=MinSizeRel
-CMAKE_FLAGS="-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX"
+CMAKE_FLAGS="-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_PREFIX_PATH=$CMAKE_INSTALL_PREFIX"
 
 (source "src/zlib-1.2.11/build-unix.sh")
 (source "src/libpng-1.6.37/build-unix.sh")
