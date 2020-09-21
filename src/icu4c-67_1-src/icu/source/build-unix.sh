@@ -18,6 +18,7 @@ make install
 
 cp $ICU_INSTALL_DIR/lib/libicui18n.a $CMAKE_INSTALL_PREFIX/lib
 cp $ICU_INSTALL_DIR/lib/libicuuc.a $CMAKE_INSTALL_PREFIX/lib
+cp $ICU_INSTALL_DIR/lib/libicudata.a $CMAKE_INSTALL_PREFIX/lib
 cp -a $ICU_INSTALL_DIR/include/. $CMAKE_INSTALL_PREFIX/include
 
 cd ..
