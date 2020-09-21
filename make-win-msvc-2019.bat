@@ -22,7 +22,7 @@ XCOPY /E /Q /Y "%ICU_DIR%\include" "%CMAKE_INSTALL_PREFIX%\include\"
 CALL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
 
 SET CMAKE_BUILD_TYPE=MinSizeRel
-SET "CMAKE_FLAGS=-DCMAKE_BUILD_TYPE=%CMAKE_BUILD_TYPE% -DCMAKE_INSTALL_PREFIX=%CMAKE_INSTALL_PREFIX%"
+SET "CMAKE_FLAGS=-DCMAKE_BUILD_TYPE=%CMAKE_BUILD_TYPE% -DCMAKE_INSTALL_PREFIX=%CMAKE_INSTALL_PREFIX% -DCMAKE_CXX_FLAGS=/Zc:inline -DCMAKE_C_FLAGS=/Zc:inline"
 
 CALL "src\zlib-1.2.11\build-win.bat"
 CALL "src\libpng-1.6.37\build-win.bat"
