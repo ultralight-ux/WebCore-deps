@@ -239,18 +239,18 @@ case $platform in
         THE_COMP="the GNU C++"
         CC=gcc; export CC
         CXX=g++; export CXX
-        RELEASE_CFLAGS='-O3'
-        RELEASE_CXXFLAGS='-O3'
-        DEBUG_CFLAGS='-g'
-        DEBUG_CXXFLAGS='-g'
+        RELEASE_CFLAGS='-O3 -fPIC'
+        RELEASE_CXXFLAGS='-O3 -fPIC'
+        DEBUG_CFLAGS='-g -fPIC'
+        DEBUG_CXXFLAGS='-g -fPIC'
         ;;
     Linux*)
         THE_OS="Linux"
         THE_COMP="the clang or else GNU C++"
-        RELEASE_CFLAGS='-O3'
-        RELEASE_CXXFLAGS='-O3'
-        DEBUG_CFLAGS='-g'
-        DEBUG_CXXFLAGS='-g'
+        RELEASE_CFLAGS='-Oz -fPIC'
+        RELEASE_CXXFLAGS='-Oz -fPIC'
+        DEBUG_CFLAGS='-g -fPIC'
+        DEBUG_CXXFLAGS='-g -fPIC'
         ;;
     Cygwin)
         THE_OS="Cygwin"
@@ -295,18 +295,18 @@ case $platform in
     MacOSX)
         THE_OS="MacOS X (Darwin)"
         THE_COMP="the default"
-        RELEASE_CFLAGS='-O2'
-        RELEASE_CXXFLAGS='-O2'
-        DEBUG_CFLAGS='-g -O0'
-        DEBUG_CXXFLAGS='-g -O0'
+        RELEASE_CFLAGS='-Oz -fPIC'
+        RELEASE_CXXFLAGS='-Oz -fPIC'
+        DEBUG_CFLAGS='-g -O0 -fPIC'
+        DEBUG_CXXFLAGS='-g -O0 -fPIC'
         ;;
     MacOSX/GCC)
         THE_OS="MacOS X (Darwin)"
         THE_COMP="the GNU C++"
-        RELEASE_CFLAGS='-O2'
-        RELEASE_CXXFLAGS='-O2'
-        DEBUG_CFLAGS='-g -O0'
-        DEBUG_CXXFLAGS='-g -O0'
+        RELEASE_CFLAGS='-Oz -fPIC'
+        RELEASE_CXXFLAGS='-Oz -fPIC'
+        DEBUG_CFLAGS='-g -O0 -fPIC'
+        DEBUG_CXXFLAGS='-g -O0 -fPIC'
         CC=gcc; export CC
         CXX=g++; export CXX
         ;;
