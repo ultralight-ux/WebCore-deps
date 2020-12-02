@@ -632,7 +632,7 @@ uprv_maximumPtr(void * base)
 U_CAPI void U_EXPORT2
 uprv_tzset()
 {
-#if defined(U_TZSET)
+#if defined(U_TZSET) && !defined(U_DISABLE_TZSET)
     U_TZSET();
 #else
     /* no initialization*/
