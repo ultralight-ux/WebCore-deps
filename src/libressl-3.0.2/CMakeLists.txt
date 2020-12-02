@@ -11,6 +11,10 @@ include(GNUInstallDirs)
 
 project (LibreSSL C ASM)
 
+if (PLATFORM_TOOLCHAIN)
+    include(${PLATFORM_TOOLCHAIN})
+endif ()
+
 enable_testing()
 
 file(READ ${CMAKE_CURRENT_SOURCE_DIR}/ssl/VERSION SSL_VERSION)

@@ -13,6 +13,10 @@ cmake_minimum_required(VERSION 3.7)
 
 project(xslt)
 
+if (PLATFORM_TOOLCHAIN)
+    include(${PLATFORM_TOOLCHAIN})
+endif ()
+
 set(VERSION 1.1.34)
 set(LIBXSLT_VERSION_NUMBER 10132)
 

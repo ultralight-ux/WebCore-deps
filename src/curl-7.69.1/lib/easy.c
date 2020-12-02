@@ -100,6 +100,10 @@ static long          init_flags;
 #define system_strdup strdup
 #endif
 
+#if (defined(WIN32) || defined(_WIN32)) && !defined(WINDOWS_DESKTOP_PLATFORM) && !defined(UWP_PLATFORM)
+#define system_strdup _strdup
+#endif
+
 #if defined(_MSC_VER) && defined(_DLL) && !defined(__POCC__)
 #  pragma warning(disable:4232) /* MSVC extension, dllimport identity */
 #endif

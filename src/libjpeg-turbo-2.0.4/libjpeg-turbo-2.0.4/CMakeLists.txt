@@ -5,6 +5,11 @@ if(CMAKE_EXECUTABLE_SUFFIX)
 endif()
 
 project(libjpeg-turbo C)
+
+if (PLATFORM_TOOLCHAIN)
+    include(${PLATFORM_TOOLCHAIN})
+endif ()
+
 set(VERSION 2.0.4)
 string(REPLACE "." ";" VERSION_TRIPLET ${VERSION})
 list(GET VERSION_TRIPLET 0 VERSION_MAJOR)

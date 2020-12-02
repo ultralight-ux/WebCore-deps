@@ -16,6 +16,10 @@ cmake_minimum_required(VERSION 3.7)
 
 project(xml2)
 
+if (PLATFORM_TOOLCHAIN)
+    include(${PLATFORM_TOOLCHAIN})
+endif ()
+
 set(VERSION 2.9.10)
 set(LIBXML_VERSION_NUMBER 20910)
 

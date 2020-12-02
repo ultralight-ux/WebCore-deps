@@ -48,6 +48,10 @@ include(CheckCCompilerFlag)
 
 project(CURL C)
 
+if (PLATFORM_TOOLCHAIN)
+    include(${PLATFORM_TOOLCHAIN})
+endif ()
+
 message(WARNING "the curl cmake build system is poorly maintained. Be aware")
 
 file(STRINGS ${CURL_SOURCE_DIR}/include/curl/curlver.h CURL_VERSION_H_CONTENTS REGEX "#define LIBCURL_VERSION( |_NUM )")

@@ -301,6 +301,7 @@ open_console(UI *ui)
 	tty_in = stdin;
 	tty_out = stderr;
 
+/*
 	HANDLE handle = GetStdHandle(STD_INPUT_HANDLE);
 	if (handle != NULL && handle != INVALID_HANDLE_VALUE) {
 		if (GetFileType(handle) == FILE_TYPE_CHAR)
@@ -308,25 +309,28 @@ open_console(UI *ui)
 		else
 			return 1;
 	}
+	*/
 	return 0;
 }
 
 static int
 noecho_console(UI *ui)
 {
+	/*
 	HANDLE handle = GetStdHandle(STD_INPUT_HANDLE);
 	if (handle != NULL && handle != INVALID_HANDLE_VALUE) {
 		if (GetFileType(handle) == FILE_TYPE_CHAR)
 			return SetConsoleMode(handle, console_mode & ~ENABLE_ECHO_INPUT);
 		else
 			return 1;
-	}
+	}*/
 	return 0;
 }
 
 static int
 echo_console(UI *ui)
 {
+	/*
 	HANDLE handle = GetStdHandle(STD_INPUT_HANDLE);
 	if (handle != NULL && handle != INVALID_HANDLE_VALUE) {
 		if (GetFileType(handle) == FILE_TYPE_CHAR)
@@ -334,6 +338,7 @@ echo_console(UI *ui)
 		else
 			return 1;
 	}
+	*/
 	return 0;
 }
 

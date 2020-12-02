@@ -167,6 +167,12 @@ CONF_modules_load_file(const char *filename, const char *appname,
 	CONF *conf = NULL;
 	int ret = 0;
 	conf = NCONF_new(NULL);
+
+#if (defined(WIN32) || defined(_WIN32)) && !defined(WINDOWS_DESKTOP_PLATFORM) && !defined(UWP_PLATFORM)
+	// Don't try to load config file on non-desktop platforms - AJS (Ultralight)
+	goto err;
+#endif
+
 	if (!conf)
 		goto err;
 

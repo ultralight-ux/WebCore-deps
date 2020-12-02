@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 2.8.0)
 project(harfbuzz)
 
+if (PLATFORM_TOOLCHAIN)
+    include(${PLATFORM_TOOLCHAIN})
+endif ()
+
 enable_testing()
 
 ## Limit framework build to Xcode generator

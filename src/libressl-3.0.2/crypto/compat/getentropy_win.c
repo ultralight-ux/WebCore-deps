@@ -24,33 +24,22 @@
 #include <errno.h>
 #include <stdint.h>
 #include <sys/types.h>
-#include <wincrypt.h>
+#include <bcrypt.h>
 #include <process.h>
 
 int	getentropy(void *buf, size_t len);
 
-/*
- * On Windows, CryptGenRandom is supposed to be a well-seeded
- * cryptographically strong random number generator.
- */
 int
 getentropy(void *buf, size_t len)
 {
-	HCRYPTPROV provider;
-
 	if (len > 256) {
 		errno = EIO;
 		return (-1);
 	}
 
-	if (CryptAcquireContext(&provider, NULL, NULL, PROV_RSA_FULL,
-	    CRYPT_VERIFYCONTEXT) == 0)
-		goto fail;
-	if (CryptGenRandom(provider, len, buf) == 0) {
-		CryptReleaseContext(provider, 0);
-		goto fail;
-	}
-	CryptReleaseContext(provider, 0);
+	if (!BCRYPT_SUCCESS(BCryptGenRandom(NULL, buf, len, BCRYPT_USE_SYSTEM_PREFERRED_RNG)))
+    goto fail;
+
 	return (0);
 
 fail:

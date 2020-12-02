@@ -3,6 +3,10 @@ set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS ON)
 
 project(zlib C)
 
+if (PLATFORM_TOOLCHAIN)
+    include(${PLATFORM_TOOLCHAIN})
+endif ()
+
 set(VERSION "1.2.11")
 
 option(ASM686 "Enable building i686 assembly implementation")
