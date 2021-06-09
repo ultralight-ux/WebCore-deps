@@ -345,11 +345,12 @@ OPENSSL_cpuid_setup(void)
 static void
 OPENSSL_showfatal(const char *fmta, ...)
 {
-	struct syslog_data sdata = SYSLOG_DATA_INIT;
+	//struct syslog_data sdata = SYSLOG_DATA_INIT;
 	va_list ap;
 
 	va_start(ap, fmta);
-	vsyslog_r(LOG_INFO|LOG_LOCAL2, &sdata, fmta, ap);
+	//vsyslog_r(LOG_INFO|LOG_LOCAL2, &sdata, fmta, ap);
+	vsyslog(LOG_INFO|LOG_LOCAL2, fmta, ap);
 	va_end(ap);
 }
 
