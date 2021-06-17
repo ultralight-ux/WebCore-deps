@@ -13,20 +13,16 @@ You'll need:
  
 To build the dependencies:
  
- 1. Open `/src/icu4c-67_1-src/icu/source/allinone/allinone.sln` in Visual Studio and build the 'common' and 'i18n' projects.
- 2. Run `make-win-msvc-2019.bat` to build the rest of the dependencies.
+ 1. Run `make-win-msvc-2019.bat`, results will be in `build-win-msvc-2019/out`
  
  ## Building on macOS/Linux
  
  You'll need:
  
-  * Clang toolchain
+  * Clang / C++ toolchain
   * CMake
   * Ninja
   
 To build the dependencies:
   
-1. Run `make-unix-clang.sh`
- 
- 
- 
+1. Run `make.sh`, results will be in `build/out` 
