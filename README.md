@@ -10,19 +10,34 @@ You'll need:
  * CMake
  * Ninja
  * NASM (https://www.nasm.us/)
- 
-To build the dependencies:
- 
- 1. Run `make-win-msvc-2019.bat`, results will be in `build-win-msvc-2019/out`
+
+At present, to build with Visual Studio, you need to run cmake from inside the
+VS 2019 command prompt. Press `Start`, and search for `VS 2019`, and click on
+`x64 Native Tools Command Prompt for VS 2019`, or a prompt named similar to
+that.
+
+Then, from the `x64 Native Tools Command Prompt for VS 2019`, change directories to this folder and run the following:
+
+```
+mkdir build
+cd build
+cmake .. -GNinja
+ninja
+ninja install
+```
  
  ## Building on macOS/Linux
  
- You'll need:
- 
-  * Clang / C++ toolchain
-  * CMake
-  * Ninja
-  
-To build the dependencies:
-  
-1. Run `make.sh`, results will be in `build/out` 
+To build for macOS/Linux:
+
+```
+mkdir build
+cd build
+cmake .. -GNinja
+ninja
+ninja install
+```
+
+## Build products
+
+Build products will be in `<build_dir>/out`.
