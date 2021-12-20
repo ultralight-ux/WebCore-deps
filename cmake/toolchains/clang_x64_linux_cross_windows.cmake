@@ -10,6 +10,8 @@ set(CMAKE_CROSSCOMPILING TRUE)
 set(UNIX TRUE)
 set(MSVC FALSE)
 
+set(PORT "UltralightLinux")
+
 # The Clang 'target triple' for the target platform
 set(triple x86_64-unknown-linux-gnu)
 
@@ -42,11 +44,13 @@ set(CMAKE_RANLIB                    ${TOOLCHAIN_PATH}x86_64-unknown-linux-gnu-ra
 set(CMAKE_SIZE                      ${TOOLCHAIN_PATH}x86_64-unknown-linux-gnu-size.exe CACHE INTERNAL "")
 set(CMAKE_STRIP                     ${TOOLCHAIN_PATH}x86_64-unknown-linux-gnu-strip.exe CACHE INTERNAL "")
 
-set(CMAKE_C_FLAGS                   "" CACHE INTERNAL "")
+set(CMAKE_C_FLAGS                   "-march=core2 -mtune=haswell -fno-exceptions -fvisibility=hidden" CACHE INTERNAL "")
 set(CMAKE_CXX_FLAGS                 "${CMAKE_C_FLAGS}" CACHE INTERNAL "")
 
-set(CMAKE_C_FLAGS_DEBUG             "-Os -g" CACHE INTERNAL "")
-set(CMAKE_C_FLAGS_RELEASE           "-Os -DNDEBUG" CACHE INTERNAL "")
+set(CMAKE_C_FLAGS_DEBUG             "-Og -g " CACHE INTERNAL "")
+set(CMAKE_C_FLAGS_MINSIZEREL        "-Os -DNDEBUG -ffunction-sections -fdata-sections" CACHE INTERNAL "")
+set(CMAKE_C_FLAGS_RELEASE           "-Ofast -DNDEBUG" CACHE INTERNAL "")
+set(CMAKE_C_FLAGS_RELWITHDEBINFO    "-O2 -g -DNDEBUG" CACHE INTERNAL "")
 set(CMAKE_CXX_FLAGS_DEBUG           "${CMAKE_C_FLAGS_DEBUG}" CACHE INTERNAL "")
 set(CMAKE_CXX_FLAGS_RELEASE         "${CMAKE_C_FLAGS_RELEASE}" CACHE INTERNAL "")
 
