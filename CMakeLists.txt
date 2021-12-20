@@ -108,6 +108,10 @@ ExternalProject_Add(harfbuzz
   DEPENDS           freetype icu
 )
 
+add_custom_target(WebCore-Deps ALL DEPENDS zlib libpng libjpeg-turbo icu libxml2 libxslt brotli nghttp2 libressl curl freetype harfbuzz)
+
 INSTALL(DIRECTORY "${OUT_DIR}/include" DESTINATION ".")
 INSTALL(DIRECTORY "${OUT_DIR}/bin" DESTINATION ".")
 INSTALL(DIRECTORY "${OUT_DIR}/lib" DESTINATION ".")
+
+include(CreateSDK.cmake)
