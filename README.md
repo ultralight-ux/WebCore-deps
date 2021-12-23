@@ -2,6 +2,18 @@
 
 This repo contains instructions for building the dependencies for our WebCore port.
 
+### Setting up on macOS
+
+1. Install Xcode Command Line Tools (or the full Xcode package).
+2. Download the macOS 10.14 Platform SDK from https://github.com/phracker/MacOSX-SDKs/releases and
+   extract it to `/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk`.
+3. Install Homebrew (https://brew.sh/)
+4. Run the following from the Terminal to setup the needed homebrew packages:
+
+```
+brew install cmake ninja nasm
+```
+
 ## Building on Windows
 
 You'll need:
