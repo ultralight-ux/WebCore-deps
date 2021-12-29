@@ -40,13 +40,13 @@ ninja install
  
  ## Building on macOS/Linux
  
-To build for macOS/Linux:
+To build for macOS/Linux, you must have a recent version of Clang:
 
 ```
 mkdir build
 cd build
-cmake .. -GNinja
-ninja
+CC=clang CXX=clang++ cmake .. -GNinja
+CC=clang CXX=clang++ ninja
 ninja install
 ```
 
