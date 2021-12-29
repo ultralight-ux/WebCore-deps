@@ -382,7 +382,7 @@ if(CMAKE_USE_OPENSSL)
     list(APPEND CURL_LIBS OpenSSL::SSL OpenSSL::Crypto)
   else()
     list(APPEND CURL_LIBS ${OPENSSL_LIBRARIES})
-    include_directories(${OPENSSL_INCLUDE_DIR})
+    include_directories(BEFORE ${OPENSSL_INCLUDE_DIR})
   endif()
 
   set(CMAKE_REQUIRED_INCLUDES ${OPENSSL_INCLUDE_DIR})
