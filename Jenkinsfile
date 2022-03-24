@@ -18,7 +18,7 @@ pipeline {
                # Build Release
                mkdir -p build
                cd build
-               cmake .. -G "Ninja"
+               cmake .. -G "Ninja" -DUL_GENERATE_SDK=1
                ninja
                cd ..
             '''
@@ -45,7 +45,7 @@ pipeline {
                rem Build Release
                if not exist build mkdir build
                cd build
-               cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+               cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DUL_GENERATE_SDK=1
                ninja
                cd ..
             '''
@@ -71,7 +71,7 @@ pipeline {
                cd build
                export CC=/usr/bin/clang
                export CXX=/usr/bin/clang++
-               cmake .. -G "Ninja"
+               cmake .. -G "Ninja" -DUL_GENERATE_SDK=1
                ninja
                cd ..
             '''
