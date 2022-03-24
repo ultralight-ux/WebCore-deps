@@ -40,3 +40,29 @@ get_filename_component(WIN_PLATFORM_DEFINES_H "win_platform_defines.h" REALPATH 
 
 add_cache_flag(CMAKE_C_FLAGS_INIT "/FI ${WIN_PLATFORM_DEFINES_H}")                       
 add_cache_flag(CMAKE_CXX_FLAGS_INIT "/FI ${WIN_PLATFORM_DEFINES_H}")
+
+if(MSVC)
+  add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
+
+  foreach (flag_var
+    CMAKE_C_FLAGS_INIT CMAKE_C_FLAGS_DEBUG_INIT CMAKE_C_FLAGS_RELEASE_INIT
+    CMAKE_C_FLAGS_MINSIZEREL_INIT CMAKE_C_FLAGS_RELWITHDEBINFO_INIT
+    CMAKE_CXX_FLAGS_INIT CMAKE_CXX_FLAGS_DEBUG_INIT CMAKE_CXX_FLAGS_RELEASE_INIT
+    CMAKE_CXX_FLAGS_MINSIZEREL_INIT CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT)
+    # Reset all project configurations to use /MD so we can override below
+    string(REGEX REPLACE "/MT" "/MD" ${flag_var} "${${flag_var}}")
+    string(REGEX REPLACE "/MDd" "/MD" ${flag_var} "${${flag_var}}")
+    string(REGEX REPLACE "/D_DEBUG" "" ${flag_var} "${${flag_var}}")
+
+    if (CMAKE_MSVC_RUNTIME_LIBRARY STREQUAL "MultiThreaded")
+        string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+    elseif (CMAKE_MSVC_RUNTIME_LIBRARY STREQUAL "MultiThreadedDLL")
+        # no-op, already /MD
+    elseif(CMAKE_MSVC_RUNTIME_LIBRARY STREQUAL "MultiThreadedDebug")
+        string(REGEX REPLACE "/MD" "/MTd" ${flag_var} "${${flag_var}}")
+    elseif(CMAKE_MSVC_RUNTIME_LIBRARY STREQUAL "MultiThreadedDebugDLL")
+        string(REGEX REPLACE "/MD" "/MDd" ${flag_var} "${${flag_var}}")
+    else()
+        message(FATAL_ERROR "Unknown MSVC runtime library: '${CMAKE_MSVC_RUNTIME_LIBRARY}'")
+    endif()
+endforeach ()

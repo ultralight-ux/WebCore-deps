@@ -57,10 +57,17 @@ endif ()
 
 set(PKG_FILENAME "webcore-deps-bin-${GIT_COMMIT_HASH}-${PLATFORM}-${ARCHITECTURE}.7z")
 
-add_custom_command(TARGET create_sdk POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E tar "cf" ${CMAKE_CURRENT_BINARY_DIR}/${PKG_FILENAME} --format=7zip -- .
-    WORKING_DIRECTORY ${INSTALL_DIR}
-)
-add_custom_command(TARGET create_sdk POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E echo "Created release archive: ${CMAKE_CURRENT_BINARY_DIR}/${PKG_FILENAME}"
-)
+
+if (NOT UL_GENERATE_SDK)
+    add_custom_command(TARGET create_sdk POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E echo "NOTE: No release archive created, SDK generation was disabled."
+    )
+else ()
+    add_custom_command(TARGET create_sdk POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E tar "cf" ${PROJECT_BINARY_DIR}/${PKG_FILENAME} --format=7zip -- .
+        WORKING_DIRECTORY ${INSTALL_DIR}
+    )
+    add_custom_command(TARGET create_sdk POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E echo "Created release archive: ${PROJECT_BINARY_DIR}/${PKG_FILENAME}"
+    )
+endif ()
