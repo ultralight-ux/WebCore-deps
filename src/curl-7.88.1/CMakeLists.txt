@@ -494,6 +494,7 @@ if(USE_NGHTTP2)
   find_package(NGHTTP2 REQUIRED)
   include_directories(${NGHTTP2_INCLUDE_DIRS})
   list(APPEND CURL_LIBS ${NGHTTP2_LIBRARIES})
+  add_definitions(-DNGHTTP2_STATICLIB)
 endif()
 
 function(CheckQuicSupportInOpenSSL)
