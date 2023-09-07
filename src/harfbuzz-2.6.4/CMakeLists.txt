@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.0)
-project(harfbuzz)
+project(harfbuzz C CXX)
 
 if (PLATFORM_TOOLCHAIN)
     include(${PLATFORM_TOOLCHAIN})
@@ -42,7 +42,8 @@ option(HB_HAVE_GRAPHITE2 "Enable Graphite2 complementary shaper" OFF)
 option(HB_HAVE_GLIB "Enable glib unicode functions" OFF)
 option(HB_HAVE_ICU "Enable icu unicode functions" OFF)
 if (APPLE)
-  option(HB_HAVE_CORETEXT "Enable CoreText shaper backend on macOS" ON)
+  # Ultralight mod - disable CoreText on macOS
+  option(HB_HAVE_CORETEXT "Enable CoreText shaper backend on macOS" OFF)
   set (CMAKE_MACOSX_RPATH ON)
 endif ()
 if (WIN32)
