@@ -1856,7 +1856,11 @@ static ssize_t cf_h2_recv(struct Curl_cfilter *cf, struct Curl_easy *data,
           && !ctx->pause_stream_id     /* we are not paused either */
           && ctx->inbuflen == 0) {     /* and out input buffer is empty */
       /* Receive data from the "lower" filters */
-      nread = Curl_conn_cf_recv(cf->next, data, ctx->inbuf, H2_BUFSIZE, err);
+      nread = 0;
+      if (!stream->closed) {
+        nread = Curl_conn_cf_recv(cf->next, data, ctx->inbuf, H2_BUFSIZE, err);
+      }
+      
       if(nread < 0) {
         if(*err != CURLE_AGAIN)
           failf(data, "Failed receiving HTTP2 data");

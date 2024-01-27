@@ -97,7 +97,7 @@ ExternalProject_Add(nghttp2
 )
 
 set(LIBRESSL_ARGS ${COMMON_ARGS} -DLIBRESSL_APPS=OFF -DLIBRESSL_TESTS=OFF -DENABLE_ASM=OFF)
-if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+if (CMAKE_C_COMPILER_ID STREQUAL "Clang")
   # Workaround issue in elliptic curve code, Clang's optimizer makes the Bignum code fail
   list(APPEND LIBRESSL_ARGS -DCMAKE_C_FLAGS="-fno-strict-aliasing" -DCMAKE_CXX_FLAGS="-fno-strict-aliasing")
 endif ()
