@@ -598,17 +598,19 @@ if(WITH_TURBOJPEG)
         LINK_FLAGS "${TJMAPFLAG}${TJMAPFILE}")
     endif()
 
-    add_executable(tjunittest tjunittest.c tjutil.c md5/md5.c md5/md5hl.c)
-    target_link_libraries(tjunittest turbojpeg)
+    if (ENABLE_APPS)
+      add_executable(tjunittest tjunittest.c tjutil.c md5/md5.c md5/md5hl.c)
+      target_link_libraries(tjunittest turbojpeg)
 
-    add_executable(tjbench tjbench.c tjutil.c)
-    target_link_libraries(tjbench turbojpeg)
-    if(UNIX)
-      target_link_libraries(tjbench m)
-    endif()
+      add_executable(tjbench tjbench.c tjutil.c)
+      target_link_libraries(tjbench turbojpeg)
+      if(UNIX)
+        target_link_libraries(tjbench m)
+      endif()
 
-    add_executable(tjexample tjexample.c)
-    target_link_libraries(tjexample turbojpeg)
+      add_executable(tjexample tjexample.c)
+      target_link_libraries(tjexample turbojpeg)
+    endif ()
   endif()
 
   if(ENABLE_STATIC)
@@ -621,15 +623,17 @@ if(WITH_TURBOJPEG)
       set_target_properties(turbojpeg-static PROPERTIES OUTPUT_NAME turbojpeg)
     endif()
 
-    add_executable(tjunittest-static tjunittest.c tjutil.c md5/md5.c
-      md5/md5hl.c)
-    target_link_libraries(tjunittest-static turbojpeg-static)
+    if (ENABLE_APPS)
+      add_executable(tjunittest-static tjunittest.c tjutil.c md5/md5.c
+        md5/md5hl.c)
+      target_link_libraries(tjunittest-static turbojpeg-static)
 
-    add_executable(tjbench-static tjbench.c tjutil.c)
-    target_link_libraries(tjbench-static turbojpeg-static)
-    if(UNIX)
-      target_link_libraries(tjbench-static m)
-    endif()
+      add_executable(tjbench-static tjbench.c tjutil.c)
+      target_link_libraries(tjbench-static turbojpeg-static)
+      if(UNIX)
+        target_link_libraries(tjbench-static m)
+      endif()
+    endif ()
   endif()
 endif()
 
@@ -644,7 +648,7 @@ else()
   set(DJPEG_BMP_SOURCES wrbmp.c wrtarga.c)
 endif()
 
-if(ENABLE_STATIC)
+if(ENABLE_STATIC AND ENABLE_APPS)
   add_executable(cjpeg-static cjpeg.c cdjpeg.c rdgif.c rdppm.c rdswitch.c
     ${CJPEG_BMP_SOURCES})
   set_property(TARGET cjpeg-static PROPERTY COMPILE_FLAGS ${COMPILE_FLAGS})
@@ -660,9 +664,11 @@ if(ENABLE_STATIC)
   set_property(TARGET jpegtran-static PROPERTY COMPILE_FLAGS "${USE_SETMODE}")
 endif()
 
-add_executable(rdjpgcom rdjpgcom.c)
+if (ENABLE_APPS)
+  add_executable(rdjpgcom rdjpgcom.c)
 
-add_executable(wrjpgcom wrjpgcom.c)
+  add_executable(wrjpgcom wrjpgcom.c)
+endif ()
 
 
 ###############################################################################
@@ -1377,16 +1383,20 @@ if(ENABLE_STATIC)
     else()
       set(DIR ${CMAKE_CURRENT_BINARY_DIR})
     endif()
-    install(PROGRAMS ${DIR}/cjpeg-static${EXE}
-      DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME cjpeg${EXE})
-    install(PROGRAMS ${DIR}/djpeg-static${EXE}
-      DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME djpeg${EXE})
-    install(PROGRAMS ${DIR}/jpegtran-static${EXE}
-      DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME jpegtran${EXE})
+    if (ENABLE_APPS)
+      install(PROGRAMS ${DIR}/cjpeg-static${EXE}
+        DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME cjpeg${EXE})
+      install(PROGRAMS ${DIR}/djpeg-static${EXE}
+        DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME djpeg${EXE})
+      install(PROGRAMS ${DIR}/jpegtran-static${EXE}
+        DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME jpegtran${EXE})
+      endif()
   endif()
 endif()
 
-install(TARGETS rdjpgcom wrjpgcom RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+if (ENABLE_APPS)
+  install(TARGETS rdjpgcom wrjpgcom RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif ()
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/README.ijg
   ${CMAKE_CURRENT_SOURCE_DIR}/README.md ${CMAKE_CURRENT_SOURCE_DIR}/example.txt

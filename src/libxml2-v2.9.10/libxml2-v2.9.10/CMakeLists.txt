@@ -75,6 +75,10 @@ if (WITH_ICU)
   add_definitions(-DU_STATIC_IMPLEMENTATION=1 -DU_DISABLE_RENAMING=1)
 endif()
 
+if (LIBXML_STATIC)
+  add_definitions(-DLIBXML_STATIC)
+endif ()
+
 if (MSVC)
   # ULTRALIGHT MODS
   add_compile_options(/Gy /Gw)

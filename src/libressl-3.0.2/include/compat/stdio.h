@@ -6,7 +6,7 @@
 #ifndef LIBCRYPTOCOMPAT_STDIO_H
 #define LIBCRYPTOCOMPAT_STDIO_H
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER >= 1900
 #include <../ucrt/stdlib.h>
 #include <../ucrt/corecrt_io.h>

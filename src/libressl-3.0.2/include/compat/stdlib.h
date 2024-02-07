@@ -3,7 +3,7 @@
  * Public domain
  */
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER >= 1900
 #include <../ucrt/stdlib.h>
 #else

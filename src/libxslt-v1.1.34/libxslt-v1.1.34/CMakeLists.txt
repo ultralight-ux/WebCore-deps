@@ -65,6 +65,10 @@ set(LIBXSLT_INCLUDE_DIRS
   ${LIBXML2_INCLUDE_DIR}
 )
 
+if (LIBXSLT_STATIC)
+  add_definitions(-DLIBXSLT_STATIC)
+endif ()
+
 if (MSVC)
   # ULTRALIGHT MODS
   add_compile_options(/Gy /Gw)

@@ -341,7 +341,7 @@ if (MSVC)
   add_compile_options(/Gy /Gw)
 endif ()
 
-if (WIN32)
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   enable_language(RC)
   list(APPEND BASE_SRCS builds/windows/ftdebug.c
                         src/base/ftver.rc)
