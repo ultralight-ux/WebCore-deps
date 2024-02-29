@@ -5,8 +5,9 @@ else ()
 endif ()
 
 set(INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/out)
+set(TARGET_NAME create_sdk_webcore_deps)
     
-add_custom_target(create_sdk ALL "${CMAKE_COMMAND}" 
+add_custom_target(${TARGET_NAME} ALL "${CMAKE_COMMAND}" 
     -D CMAKE_INSTALL_PREFIX:string=${INSTALL_DIR}
     -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_install.cmake" 
     DEPENDS WebCore-Deps) 
@@ -14,7 +15,7 @@ add_custom_target(create_sdk ALL "${CMAKE_COMMAND}"
 # Get name of current branch
 execute_process(
   COMMAND git rev-parse --abbrev-ref HEAD
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   OUTPUT_VARIABLE GIT_BRANCH
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
@@ -22,7 +23,7 @@ execute_process(
 # Get status of current branch
 execute_process(
   COMMAND git status --untracked-files=no --porcelain
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   OUTPUT_VARIABLE GIT_STATUS
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
@@ -30,7 +31,7 @@ execute_process(
 # Get abbreviated commit hash of current branch
 execute_process(
   COMMAND git rev-parse --short=8 HEAD
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   OUTPUT_VARIABLE GIT_COMMIT_HASH
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
@@ -38,7 +39,7 @@ execute_process(
 # Get list of local, unpushed commits
 execute_process(
   COMMAND git cherry -v
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   OUTPUT_VARIABLE GIT_CHERRY
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
@@ -59,15 +60,15 @@ set(PKG_FILENAME "webcore-deps-bin-${GIT_COMMIT_HASH}-${PLATFORM}-${ARCHITECTURE
 
 
 if (NOT UL_GENERATE_SDK)
-    add_custom_command(TARGET create_sdk POST_BUILD
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E echo "NOTE: No release archive created, SDK generation was disabled."
     )
 else ()
-    add_custom_command(TARGET create_sdk POST_BUILD
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E tar "cf" ${PROJECT_BINARY_DIR}/${PKG_FILENAME} --format=7zip -- .
         WORKING_DIRECTORY ${INSTALL_DIR}
     )
-    add_custom_command(TARGET create_sdk POST_BUILD
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E echo "Created release archive: ${PROJECT_BINARY_DIR}/${PKG_FILENAME}"
     )
 endif ()

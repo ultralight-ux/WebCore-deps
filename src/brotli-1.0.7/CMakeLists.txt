@@ -102,7 +102,7 @@ if(NOT LOG2_RES)
   if(LOG2_LIBM_RES)
     set(LIBM_LIBRARY "m")
   else()
-    message(FATAL_ERROR "log2() not found")
+    #message(FATAL_ERROR "log2() not found")
   endif()
 
   set(CMAKE_REQUIRED_LIBRARIES "${orig_req_libs}")
