@@ -72,7 +72,14 @@ if(WIN32 OR (CMAKE_SYSTEM_NAME MATCHES "MINGW"))
 	add_definitions(-D__USE_MINGW_ANSI_STDIO)
 endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -Wall")
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+endif ()
+
+if (NOT CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+  # Workaround issue in elliptic curve code, Clang's optimizer makes the Bignum code fail
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-strict-aliasing")
+endif ()
 
 if(CMAKE_SYSTEM_NAME MATCHES "HP-UX")
 	if(CMAKE_C_COMPILER MATCHES "gcc")

@@ -97,10 +97,6 @@ ExternalProject_Add(nghttp2
 )
 
 set(LIBRESSL_ARGS ${COMMON_ARGS} -DLIBRESSL_APPS=OFF -DLIBRESSL_TESTS=OFF -DENABLE_ASM=OFF)
-if (CMAKE_C_COMPILER_ID MATCHES "^(Apple)?Clang$")
-  # Workaround issue in elliptic curve code, Clang's optimizer makes the Bignum code fail
-  list(APPEND LIBRESSL_ARGS -DCMAKE_C_FLAGS="-fno-strict-aliasing" -DCMAKE_CXX_FLAGS="-fno-strict-aliasing")
-endif ()
 
 ExternalProject_Add(libressl
   SOURCE_DIR        ${SRC_DIR}/libressl-3.0.2
@@ -121,10 +117,6 @@ ExternalProject_Add(freetype
 )
 
 set(HARFBUZZ_ARGS ${COMMON_ARGS} -DHB_HAVE_FREETYPE=ON -DHB_HAVE_ICU=ON -DHB_BUILD_UTILS=OFF -DHB_BUILD_SUBSET=OFF -DHB_BUILD_TESTS=OFF -DFREETYPE_INCLUDE_DIRS=${OUT_DIR}/include -DFREETYPE_LIBRARY=${OUT_DIR}/lib/foobar.a -DICU_ROOT=${OUT_DIR})
-if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-  set(CXX_FLAGS "-std=gnu++14")
-  list(APPEND HARFBUZZ_ARGS -DCMAKE_CXX_FLAGS=${CXX_FLAGS} )
-endif ()
 
 ExternalProject_Add(harfbuzz
   SOURCE_DIR        ${SRC_DIR}/harfbuzz-2.6.4

@@ -140,6 +140,11 @@ if (MSVC)
   add_definitions(-D_HAS_EXCEPTIONS=0)
 endif ()
 
+# ULTRALIGHT MODS
+if (APPLE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++14")
+endif ()
+
 
 ## Detect if we are running inside a distribution or regular repository folder
 # if (EXISTS "${PROJECT_SOURCE_DIR}/ChangeLog")
