@@ -124,7 +124,14 @@ ExternalProject_Add(harfbuzz
   DEPENDS           freetype icu
 )
 
-add_custom_target(WebCore-Deps ALL DEPENDS zlib libpng libjpeg-turbo icu libxml2 libxslt brotli nghttp2 libressl curl freetype harfbuzz)
+set(WEBP_ARGS ${COMMON_ARGS} -DWEBP_ENABLE_SIMD=ON -DWEBP_USE_THREAD=ON -DBUILD_SHARED_LIBS=OFF -DWEBP_LINK_STATIC=ON -DWEBP_BUILD_ANIM_UTILS=OFF -DWEBP_BUILD_CWEBP=OFF -DWEBP_BUILD_DWEBP=OFF -DWEBP_BUILD_GIF2WEBP=OFF -DWEBP_BUILD_IMG2WEBP=OFF -DWEBP_BUILD_VWEBP=OFF -DWEBP_BUILD_WEBPINFO=OFF -DWEBP_BUILD_LIBWEBPMUX=OFF -DWEBP_BUILD_WEBPMUX=OFF -DWEBP_BUILD_EXTRAS=OFF -DWEBP_BUILD_WEBP_JS=OFF -DWEBP_NEAR_LOSSLESS=OFF -DWEBP_ENABLE_SWAP_16BIT_CSP=OFF)
+
+ExternalProject_Add(libwebp
+  SOURCE_DIR        ${SRC_DIR}/libwebp-1.4.0
+  CMAKE_ARGS        ${WEBP_ARGS}
+)
+
+add_custom_target(WebCore-Deps ALL DEPENDS zlib libpng libjpeg-turbo icu libxml2 libxslt brotli nghttp2 libressl curl freetype harfbuzz libwebp)
 
 INSTALL(DIRECTORY "${OUT_DIR}/include" DESTINATION ".")
 INSTALL(DIRECTORY "${OUT_DIR}/bin" DESTINATION ".")
