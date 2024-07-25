@@ -448,6 +448,12 @@ FT_BEGIN_HEADER
 
 #endif /* !FT_BASE_DEF */
 
+// Ultralight mod: we link statically, don't export any symbols
+#if defined( __cplusplus )
+#define FT_EXPORT( x )  extern "C"  x
+#else
+#define FT_EXPORT( x )  extern  x
+#endif
 
   /* When compiling FreeType as a DLL or DSO with hidden visibility    */
   /* some systems/compilers need a special attribute in front OR after */
