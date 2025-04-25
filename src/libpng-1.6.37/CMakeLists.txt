@@ -18,8 +18,8 @@
 # For conditions of distribution and use, see the disclaimer
 # and license in png.h
 
-cmake_minimum_required(VERSION 3.1)
-cmake_policy(VERSION 3.1)
+cmake_minimum_required(VERSION 3.15.0)
+cmake_policy(VERSION 3.5.0)
 
 project(libpng C ASM)
 if (PLATFORM_TOOLCHAIN)
