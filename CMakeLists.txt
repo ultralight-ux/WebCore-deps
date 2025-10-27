@@ -99,7 +99,7 @@ ExternalProject_Add(nghttp2
 set(LIBRESSL_ARGS ${COMMON_ARGS} -DLIBRESSL_APPS=OFF -DLIBRESSL_TESTS=OFF -DENABLE_ASM=OFF)
 
 ExternalProject_Add(libressl
-  SOURCE_DIR        ${SRC_DIR}/libressl-3.0.2
+  SOURCE_DIR        ${SRC_DIR}/libressl-3.9.2
   CMAKE_ARGS        ${LIBRESSL_ARGS}
 )
 
