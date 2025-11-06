@@ -132,7 +132,12 @@ ExternalProject_Add(libwebp
   CMAKE_ARGS        ${WEBP_ARGS}
 )
 
-add_custom_target(WebCore-Deps ALL DEPENDS zlib libpng libjpeg-turbo icu libxml2 libxslt brotli nghttp2 libressl curl freetype harfbuzz libwebp)
+ExternalProject_Add(libpsl
+  SOURCE_DIR        ${SRC_DIR}/libpsl-0.21.5
+  CMAKE_ARGS        ${COMMON_ARGS} -DBUILD_SHARED_LIBS=OFF
+)
+
+add_custom_target(WebCore-Deps ALL DEPENDS zlib libpng libjpeg-turbo icu libxml2 libxslt brotli nghttp2 libressl curl freetype harfbuzz libwebp libpsl)
 
 INSTALL(DIRECTORY "${OUT_DIR}/include" DESTINATION ".")
 INSTALL(DIRECTORY "${OUT_DIR}/bin" DESTINATION ".")
