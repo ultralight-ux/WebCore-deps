@@ -119,9 +119,11 @@ if(WIN32)
 
     if(MSVC)
         # MSVC-specific compatibility
-        target_compile_definitions(psl PRIVATE
-            $<$<NOT:$<COMPILE_FEATURES:c_snprintf>>:snprintf=_snprintf>
-        )
+        # Modern MSVC (VS2015+) and clang-cl have snprintf in the standard library
+        # Only define the fallback for very old MSVC versions
+        if(MSVC_VERSION AND MSVC_VERSION LESS 1900)
+            target_compile_definitions(psl PRIVATE snprintf=_snprintf)
+        endif()
         # Check for _alloca
         include(CheckSymbolExists)
         check_symbol_exists(_alloca "malloc.h" HAVE__ALLOCA)
