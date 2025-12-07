@@ -27,12 +27,61 @@ include(ExternalProject)
 
 message(STATUS "Building to: ${OUT_DIR}")
 
-ExternalProject_Add(zlib
-  SOURCE_DIR        ${SRC_DIR}/zlib-1.2.11
-  CMAKE_ARGS        ${COMMON_ARGS} -DBUILD_SHARED_LIBS=OFF 
+# zlib-ng configuration for drop-in zlib replacement with SIMD optimizations
+set(ZLIB_NG_ARGS
+    ${COMMON_ARGS}
+    -DBUILD_SHARED_LIBS=OFF
+    # Enable zlib-compatible API (drop-in replacement)
+    -DZLIB_COMPAT=ON
+    # Disable testing/benchmarks
+    -DBUILD_TESTING=OFF
+    -DWITH_GTEST=OFF
+    -DWITH_BENCHMARKS=OFF
+    -DWITH_FUZZERS=OFF
+    # Enable runtime CPU detection for SIMD (critical for portable binaries)
+    -DWITH_RUNTIME_CPU_DETECTION=ON
+    # x86/x64 SIMD options (all enabled, selected at runtime via CPUID)
+    -DWITH_SSE2=ON
+    -DWITH_SSSE3=ON
+    -DWITH_SSE41=ON
+    -DWITH_SSE42=ON
+    -DWITH_PCLMULQDQ=ON
+    -DWITH_AVX2=ON
+    -DWITH_AVX512=ON
+    -DWITH_AVX512VNNI=ON
+    -DWITH_VPCLMULQDQ=ON
+    # ARM SIMD options (for Apple Silicon and Linux ARM64)
+    -DWITH_NEON=ON
+    -DWITH_ARMV8=ON
 )
 
-set(LIBPNG_ARGS ${COMMON_ARGS} -DPNG_SHARED=OFF -DPNG_TESTS=OFF -DPNG_BUILD_ZLIB=ON -DZLIB_LIBRARY:STRING=${OUT_DIR}/lib/zlibstat.lib -DZLIB_INCLUDE_DIR:STRING=${OUT_DIR}/include/)
+ExternalProject_Add(zlib
+  SOURCE_DIR        ${SRC_DIR}/zlib-ng-2.3.2
+  CMAKE_ARGS        ${ZLIB_NG_ARGS}
+)
+
+# Set platform-specific zlib static library name
+# Both zlib-1.2.11 and zlib-ng with ZLIB_COMPAT=ON produce:
+# - Windows MSVC/clang-cl: zlibstatic.lib
+# - Unix (Linux/macOS): libz.a
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set(ZLIB_STATIC_LIB_NAME "zlibstatic.lib")
+else ()
+    set(ZLIB_STATIC_LIB_NAME "libz.a")
+endif ()
+
+set(LIBPNG_ARGS ${COMMON_ARGS}
+    -DPNG_SHARED=OFF
+    -DPNG_TESTS=OFF
+    -DPNG_BUILD_ZLIB=ON
+    -DZLIB_LIBRARY:STRING=${OUT_DIR}/lib/${ZLIB_STATIC_LIB_NAME}
+    -DZLIB_INCLUDE_DIR:STRING=${OUT_DIR}/include/)
+
+# Enable libpng SSE2 intrinsics for x64 builds
+# Fixes: CMAKE_SYSTEM_PROCESSOR "AMD64" doesn't match libpng's "^x86_64*" pattern
+if (CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64|x86_64")
+    set(LIBPNG_ARGS ${LIBPNG_ARGS} -DPNG_INTEL_SSE:STRING=on)
+endif ()
 
 if (CMAKE_SYSTEM_NAME MATCHES "Darwin" AND CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
   set(PNG_ARM_NEON "on")
