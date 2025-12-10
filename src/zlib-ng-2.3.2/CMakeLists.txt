@@ -673,7 +673,7 @@ endif()
 add_compile_options($<$<CONFIG:Debug>:-DZLIB_DEBUG>)
 
 if(MSVC)
-    set(CMAKE_DEBUG_POSTFIX "d")
+    #set(CMAKE_DEBUG_POSTFIX "d")
     add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
     add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
 endif()
