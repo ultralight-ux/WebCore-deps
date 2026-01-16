@@ -33,6 +33,11 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
   set(COMMON_ARGS ${COMMON_ARGS} -DCMAKE_POLICY_DEFAULT_CMP0091=NEW)
 endif ()
 
+# Propagate UL_TOP_BINARY_DIR for environment caching
+if(DEFINED UL_TOP_BINARY_DIR)
+    set(COMMON_ARGS ${COMMON_ARGS} -DUL_TOP_BINARY_DIR=${UL_TOP_BINARY_DIR})
+endif()
+
 include(ExternalProject)
 
 message(STATUS "Building to: ${OUT_DIR}")
