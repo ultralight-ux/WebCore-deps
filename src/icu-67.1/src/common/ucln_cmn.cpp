@@ -76,7 +76,12 @@ ucln_common_registerCleanup(ECleanupCommonType type,
     // No other point in ICU uses std::call_once().
 
     U_ASSERT(UCLN_COMMON_START < type && type < UCLN_COMMON_COUNT);
-    if (type == UCLN_COMMON_MUTEX) {
+    // Bypass mutex for UCLN_COMMON_MUTEX and UCLN_COMMON_UDATA.
+    // UCLN_COMMON_MUTEX: Avoids recursive call_once (ticket 10295).
+    // UCLN_COMMON_UDATA: Avoids call_once deadlock during early init on Windows,
+    //   which can deadlock with the loader lock. Same safety rationale applies -
+    //   concurrent registrations store the same function pointer.
+    if (type == UCLN_COMMON_MUTEX || type == UCLN_COMMON_UDATA) {
         gCommonCleanupFunctions[type] = func;
     } else if (UCLN_COMMON_START < type && type < UCLN_COMMON_COUNT)  {
         icu::Mutex m;     // See ticket 10295 for discussion.
