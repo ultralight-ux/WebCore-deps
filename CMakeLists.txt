@@ -156,6 +156,15 @@ ExternalProject_Add(brotli
   CMAKE_ARGS        ${COMMON_ARGS} -DBROTLI_DISABLE_CLI=ON -DBROTLI_DISABLE_TESTS=ON
 )
 
+ExternalProject_Add(woff2
+  SOURCE_DIR        ${SRC_DIR}/woff2-1.0.2
+  CMAKE_ARGS        ${COMMON_ARGS}
+                    -DBUILD_SHARED_LIBS=OFF
+                    -DCANONICAL_PREFIXES=ON
+                    -DNOISY_LOGGING=OFF
+  DEPENDS           brotli
+)
+
 ExternalProject_Add(nghttp2
   SOURCE_DIR        ${SRC_DIR}/nghttp2-1.40.0
   CMAKE_ARGS        ${COMMON_ARGS} -DENABLE_LIB_ONLY=ON -DENABLE_ASIO_LIB=OFF -DENABLE_FAILMALLOC=OFF -DENABLE_THREADS=OFF -DENABLE_WERROR=OFF -DWITH_JEMALLOC=OFF -DWITH_LIBXML2=OFF -DWITH_MRUBY=OFF -DWITH_NEVERBLEED=OFF -DWITH_SPDYLAY=OFF -DENABLE_SHARED_LIB=OFF -DENABLE_STATIC_LIB=ON
@@ -202,7 +211,7 @@ ExternalProject_Add(libpsl
   CMAKE_ARGS        ${COMMON_ARGS} -DBUILD_SHARED_LIBS=OFF
 )
 
-add_custom_target(WebCore-Deps ALL DEPENDS zlib libpng libjpeg-turbo icu libxml2 libxslt brotli nghttp2 libressl curl freetype harfbuzz libwebp libpsl)
+add_custom_target(WebCore-Deps ALL DEPENDS zlib libpng libjpeg-turbo icu libxml2 libxslt brotli woff2 nghttp2 libressl curl freetype harfbuzz libwebp libpsl)
 
 INSTALL(DIRECTORY "${OUT_DIR}/include" DESTINATION ".")
 INSTALL(DIRECTORY "${OUT_DIR}/bin" DESTINATION ".")
