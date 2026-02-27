@@ -10,7 +10,9 @@ set(COMMON_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${OUT_DIR}
                 -DCMAKE_FIND_ROOT_PATH=${OUT_DIR}
                 -DCMAKE_DEBUG_POSTFIX:STRING=
                 -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-                -DUL_SUPPRESS_WARNINGS=ON)
+                -DUL_SUPPRESS_WARNINGS=ON
+                -DUL_ENABLE_ASAN=${UL_ENABLE_ASAN}
+                -DUL_SKIP_DEPENDENCY_CHECKS=ON)
 
 project(WebCore-Deps)
 
